@@ -1,0 +1,129 @@
+[
+    {
+        "id": "56a0a1a0.bddc1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ad01f666.38a248",
+        "type": "rpi-sensehat in",
+        "z": "56a0a1a0.bddc1",
+        "name": "",
+        "motion": false,
+        "env": false,
+        "stick": true,
+        "x": 80,
+        "y": 60,
+        "wires": [
+            [
+                "8513dad0.68f818"
+            ]
+        ]
+    },
+    {
+        "id": "34a769b2.58b1a6",
+        "type": "http request",
+        "z": "56a0a1a0.bddc1",
+        "name": "Call User Info",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://fortnite-public-api.theapinetwork.com/prod09/users/id?username=BlstEndedSkrewt",
+        "tls": "",
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "cd57a135.95dd9"
+            ]
+        ]
+    },
+    {
+        "id": "c84bab9e.ec0eb8",
+        "type": "http request",
+        "z": "56a0a1a0.bddc1",
+        "name": "Call User Stats",
+        "method": "GET",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 700,
+        "y": 280,
+        "wires": [
+            [
+                "4fa95d87.4211d4"
+            ]
+        ]
+    },
+    {
+        "id": "8513dad0.68f818",
+        "type": "switch",
+        "z": "56a0a1a0.bddc1",
+        "name": "Joystick pressed?",
+        "property": "payload[key='ENTER'] and payload[state=0]",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "34a769b2.58b1a6"
+            ]
+        ]
+    },
+    {
+        "id": "8a19e4a0.fdfc38",
+        "type": "rpi-sensehat out",
+        "z": "56a0a1a0.bddc1",
+        "name": "Display score",
+        "x": 1020,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4fa95d87.4211d4",
+        "type": "template",
+        "z": "56a0a1a0.bddc1",
+        "name": "Create string from stats",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Current Score: {{payload.totals.score}}",
+        "output": "str",
+        "x": 870,
+        "y": 340,
+        "wires": [
+            [
+                "8a19e4a0.fdfc38"
+            ]
+        ]
+    },
+    {
+        "id": "cd57a135.95dd9",
+        "type": "template",
+        "z": "56a0a1a0.bddc1",
+        "name": "Extract User ID",
+        "field": "url",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "https://fortnite-public-api.theapinetwork.com/prod09/users/public/br_stats?user_id={{payload.uid}}&platform=pc",
+        "output": "str",
+        "x": 540,
+        "y": 220,
+        "wires": [
+            [
+                "c84bab9e.ec0eb8"
+            ]
+        ]
+    }
+]
