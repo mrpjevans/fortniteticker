@@ -97,7 +97,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "Current Score: {{payload.totals.score}}",
+        "template": "Solo Score: {{payload.stats.score_solo}}",
         "output": "str",
         "x": 870,
         "y": 340,
