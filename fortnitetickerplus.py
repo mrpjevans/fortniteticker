@@ -84,35 +84,41 @@ def getServerStatus():
 
 # Main Loop
 print('Running')
-while True:
 
-    user = None
+try:
 
-    if isPi:
-        event = sense.stick.wait_for_event()
-        if (event.direction != "middle"):
-            user = users[event.direction]
-        elif (event.action == 'pressed'):
-            status = getServerStatus()
-            print('Status: ' + status)
-            sense.show_message('Status: ' + status)
-    else:
-        direction = input("Choose a direction or fire (u/d/l/r/s): ")
-        if direction == 'u':
-            user = users['up']
-        elif direction == 'd':
-            user = users['down']
-        elif direction == 'l':
-            user = users['left']
-        elif direction == 'r':
-            user = users['right']
-        elif direction == 's':
-            status = getServerStatus()
-            print('Status: ' + status)
+    while True:
 
-    # Get a user's score and display
-    if user is not None:
-        score = getScore(user['username'], user['platform'])
-        print(user['username'] + " on " + user['platform'] + ": " + str(score))
+        user = None
+
         if isPi:
-            sense.show_message(user['username'] + " on " + user['platform'] + ": " + str(score))
+            event = sense.stick.wait_for_event()
+            if (event.direction != "middle" and event.action == 'pressed'):
+                user = users[event.direction]
+            elif (event.action == 'pressed'):
+                status = getServerStatus()
+                print('Status: ' + status)
+                sense.show_message('Status: ' + status)
+        else:
+            direction = input("Choose a direction or fire (u/d/l/r/s): ")
+            if direction == 'u':
+                user = users['up']
+            elif direction == 'd':
+                user = users['down']
+            elif direction == 'l':
+                user = users['left']
+            elif direction == 'r':
+                user = users['right']
+            elif direction == 's':
+                status = getServerStatus()
+                print('Status: ' + status)
+
+        # Get a user's score and display
+        if user is not None:
+            score = getScore(user['username'], user['platform'])
+            print(user['username'] + " on " + user['platform'] + ": " + str(score))
+            if isPi:
+                sense.show_message(user['username'] + " on " + user['platform'] + ": " + str(score))
+
+except KeyboardInterrupt:
+    sense.clear(0, 0, 0)
