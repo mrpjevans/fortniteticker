@@ -103,7 +103,6 @@ try:
                     sense.clear(0, 255, 0)
                 else:
                     sense.clear(255, 0, 0)
-                sense.show_message('Status: ' + status)
         else:
             direction = input("Choose a direction or fire (u/d/l/r/s): ")
             if direction == 'u':
