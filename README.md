@@ -9,11 +9,11 @@ There's also fortnighttickerplus.py which shows how to do the same with Python a
 
 ### Installation
 
-Assuming you have git and pip installed:
+Assuming you have git and pip installed (sudo apt install git python-pip):
 
 ```
 $ cd
-$ git clone https://github.com/mrpjevans/fortniteticker
+$ git clone https://github.com/mrpjevans/fortniteticker.git
 $ sudo apt install sense-hat
 $ pip install requests
 ```
