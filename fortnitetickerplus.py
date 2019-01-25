@@ -93,11 +93,16 @@ try:
 
         if isPi:
             event = sense.stick.wait_for_event()
-            if (event.direction != "middle" and event.action == 'pressed'):
+            if event.direction != "middle" and event.action == 'pressed':
+                sense.clear(0, 0, 0)
                 user = users[event.direction]
-            elif (event.action == 'pressed'):
+            elif event.action == 'pressed':
                 status = getServerStatus()
                 print('Status: ' + status)
+                if status == 'UP':
+                    sense.clear(0, 255, 0)
+                else:
+                    sense.clear(255, 0, 0)
                 sense.show_message('Status: ' + status)
         else:
             direction = input("Choose a direction or fire (u/d/l/r/s): ")
